@@ -1,66 +1,159 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Task Management API
+This project is a Task Management API built using Laravel (version 12) on the backend and Vue.js on the frontend. It provides functionality to create, retrieve, update, and delete tasks, following best practices to ensure scalability, maintainability, and a smooth user experience.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Technologies Used
+Backend: Laravel 12, MySQL
 
-## About Laravel
+Frontend: Vue.js, Vue Router, Pinia, Ant Design
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+State Management: Pinia
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+API Requests: Axios
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Installation
+Prerequisites
+Before you start, ensure you have the following installed:
 
-## Learning Laravel
+PHP >= 8.1
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Composer
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Node.js and npm
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+MySQL
 
-## Laravel Sponsors
+Backend Setup (Laravel)
+Clone the repository:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+bash
+Copy
+Edit
+git clone https://github.com/yourusername/task-management-api.git
+cd task-management-api
+Install the dependencies:
 
-### Premium Partners
+bash
+Copy
+Edit
+composer install
+Copy the .env.example to .env:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+bash
+Copy
+Edit
+cp .env.example .env
+Set up your database in the .env file:
 
-## Contributing
+env
+Copy
+Edit
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=task_management
+DB_USERNAME=root
+DB_PASSWORD=
+Generate the application key:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+bash
+Copy
+Edit
+php artisan key:generate
+Run the migrations and seed the database:
 
-## Code of Conduct
+bash
+Copy
+Edit
+php artisan migrate --seed
+This will create the necessary tables in the database and populate them with some sample data for testing.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Frontend Setup (Vue.js)
+Navigate to the frontend directory:
 
-## Security Vulnerabilities
+bash
+Copy
+Edit
+cd frontend
+Install the dependencies:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+bash
+Copy
+Edit
+npm install
+Start the development server:
 
-## License
+bash
+Copy
+Edit
+npm run serve
+Open your browser and go to http://localhost:8080 to access the task management UI.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+API Endpoints
+The API provides the following endpoints to manage tasks:
+
+GET /api/tasks: Retrieve a list of tasks.
+
+POST /api/tasks: Create a new task.
+
+PUT /api/tasks/{id}: Update an existing task.
+
+DELETE /api/tasks/{id}: Delete a task.
+
+Backend Details
+Migrations & Database Design
+In the backend, database migrations are used to ensure a clean and structured database schema:
+
+Tasks Table: Includes essential fields such as title, description, status, and timestamps. Required fields and nullable fields are appropriately defined.
+
+Example Migration:
+
+php
+Copy
+Edit
+Schema::create('tasks', function (Blueprint $table) {
+    $table->id();
+    $table->string('title');
+    $table->text('description');
+    $table->enum('status', ['pending', 'in-progress', 'completed']);
+    $table->timestamps();
+});
+Factories & Seeders: Factories and seeders are used to populate the database with sample data for testing purposes, providing a foundation for testing API functionality.
+
+Controller Methods
+The task management logic is handled through the controller, where the methods are designed for task creation, retrieval, updating, and deletion. Error handling and validation are incorporated using Laravel's built-in validation system.
+
+Logging & Error Handling
+Laravel's logging functionality is integrated into the backend to ensure proper error tracking. This helps with debugging and provides insights into any issues that may occur.
+
+Frontend Details
+Vue.js & Pinia
+On the frontend, I used Vue.js with Vue Router for seamless navigation and routing. To manage the application state, Pinia is used, which makes the state management simpler and more maintainable.
+
+Pinia is extended with an Axios interceptor for better handling of API requests and responses. This ensures that all HTTP calls are streamlined, and responses are consistently formatted.
+
+
+Ant Design
+I used Ant Design for creating the UI components, such as buttons, forms, tables, and modals, providing a polished and user-friendly interface for interacting with the task management system.
+
+The final task management UI includes:
+
+A list view of all tasks
+
+A form to create and edit tasks
+
+Task deletion functionality with a confirmation modal
+
+Best Practices & Scalable Approach
+This solution follows best practices to ensure the code is scalable and maintainable:
+
+Modular Structure: The backend follows a clean MVC structure with well-defined controllers, models, and migrations.
+
+Error Handling: Errors are handled gracefully on both the backend and frontend, providing clear feedback to users.
+
+State Management: Pinia is used for efficient state management, ensuring the application remains scalable as it grows.
+
+UI/UX: Ant Design provides a responsive and intuitive user interface, making the application user-friendly.
+
+Conclusion
+This project implements a scalable and maintainable task management system using Laravel, MySQL, Vue.js, and Pinia. The API allows for creating, retrieving, updating, and deleting tasks, while the frontend offers an intuitive user experience. Best practices were followed throughout the development process to ensure clean, maintainable, and robust code.
+
